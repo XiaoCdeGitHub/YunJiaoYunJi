@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import Login from '../views/Login/Login.vue';
 import Admin from '../views/Admin/Admin.vue';
 import User from '../views/User/User.vue';
 const router = createRouter({
@@ -10,13 +11,8 @@ const router = createRouter({
       redirect: '/Login',
     },
     {
-      path: '/home',
-      children: [
-        {
-          path: '/',
-          redirect: '/Login',
-        },
-      ],
+      path: '/login',
+      component: Login
     }, {
       path: '/admin',
       name:'Admin',
