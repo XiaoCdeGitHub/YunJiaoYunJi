@@ -6,7 +6,7 @@
           <div class="user-photo">
             <img src="https://cd-mapbed.oss-cn-beijing.aliyuncs.com/preview.gif" alt="" />
           </div>
-          <p :userName="userName">早上好，{{ userName }}!</p>
+          <p :userName="userName">早上好，{{ userData.name}}!</p>
         </div>
         <div class="fly1">
           <img src="" alt="" />
@@ -56,7 +56,7 @@
           阶段:
         </div>
       </template>
-      <el-tag size="small">适应期第一周 </el-tag></el-descriptions-item>
+      <el-tag size="small">{{ userData.period }}</el-tag></el-descriptions-item>
     <el-descriptions-item >
       <template #label>
         <div class="cell-item">
@@ -64,7 +64,7 @@
           方向:
         </div>
       </template>
-      <el-tag size="small">全栈方向</el-tag></el-descriptions-item>
+      <el-tag size="small">{{ userData.direction}}</el-tag></el-descriptions-item>
     <el-descriptions-item >
       <template #label>
         <div class="cell-item">
@@ -72,7 +72,7 @@
           组别:
         </div>
       </template>
-      <el-tag size="small">第二组</el-tag></el-descriptions-item>
+      <el-tag size="small">{{ userData.group}}</el-tag></el-descriptions-item>
     <el-descriptions-item>
       <template #label>
         <div class="cell-item">
@@ -82,7 +82,7 @@
           姓名：
         </div>
       </template>
-      <el-tag size="small">崔鼎</el-tag>
+      <el-tag size="small">{{ userData.name}}</el-tag>
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
@@ -91,7 +91,7 @@
           学号:
         </div>
       </template>
-      <el-tag size="small">2021005697</el-tag></el-descriptions-item
+      <el-tag size="small">{{ userData.id}}</el-tag></el-descriptions-item
     >
   </el-descriptions>
 
@@ -108,10 +108,10 @@
     <div class="middle-footer">
     <div class="little-boy">
     <span class="date">
-      2024-1-17
+      {{ nowDate }}
     </span>
     <span class="time">
-      17:40
+      {{currentTime}}
     </span>
     <span class>
 
@@ -121,8 +121,8 @@
     <div class="carousel">
 
   <el-carousel :interval="4000" type="card" height="220px">
-    <el-carousel-item v-for="item in 6" :key="item">
-      <h3 text="2xl" justify="center">{{ item }}</h3>
+    <el-carousel-item v-for="(item,index) in carousel" :key="index">
+      <img :src="item" alt="">
     </el-carousel-item>
   </el-carousel>
 
@@ -136,6 +136,60 @@
 import {
   Location,Flag, Finished,Document,User,SuccessFilled
 } from '@element-plus/icons-vue'
+
+//学生信息
+const userData = ref({
+  period: '适应期第一周',
+  direction: '全栈方向',
+  group: '第二组',
+  name: '崔鼎',
+  id:'2021005697'
+})
+//轮播图内容
+const carousel = ref([
+  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/4.jpg',
+  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/3.jpg',
+  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/2.jpg',
+  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/1.jpg',
+  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/5.jpg',
+])
+// 创建一个表示当前日期的Date对象
+let currentDate = new Date();
+// 获取年份
+let year = currentDate.getFullYear();
+// 获取月份（注意：返回的月份是从0开始的，所以需要加1）
+let month = currentDate.getMonth() + 1;
+// 获取日期
+let day = currentDate.getDate();
+const nowDate = year + '-' + month + '-' + day;
+// 打印当前日期
+console.log(nowDate, 'nowDate');
+
+function getCurrentTime() {
+  let currentTime = new Date();
+  let hours = currentTime.getHours();
+  let minutes = currentTime.getMinutes();
+  let seconds = currentTime.getSeconds();
+  // 格式化小时、分钟和秒，以确保始终为两位数
+  if (hours < 10) {
+    hours = '0' + hours;
+  }
+  if (minutes < 10) {
+    minutes = '0' + minutes;
+  }
+  if (seconds < 10) {
+    seconds = '0' + seconds;
+  }
+  let timeString = hours + ':' + minutes + ':' + seconds;
+  return timeString;
+}
+const currentTime = ref('')
+// 每秒更新当前时间
+setInterval(function() {
+ currentTime.value = getCurrentTime();
+  // console.log(currentTime);
+}, 1000);
+
 </script>
 
 <style lang="less" scoped>
@@ -356,13 +410,16 @@ import {
       position: absolute;
       top: 21vh;
       left: 2.5vw;
+      font-weight: 600;
       color: white;
     }
     .time{
       position: absolute;
       top: 6vh;
-      left: 6.5vw;
+      left: 5.8vw;
       color: white;
+      font-weight: 600;
+
     }
   }
   .carousel{
@@ -370,6 +427,10 @@ import {
   height: 37vh;
   // background-color: white;
   margin-left: 50px;
+  img{
+    width: 100%;
+    height: 100%;
+  }
   }
   .el-carousel__item h3 {
   color: #475669;
