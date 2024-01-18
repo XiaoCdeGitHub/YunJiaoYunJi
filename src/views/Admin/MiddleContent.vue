@@ -375,46 +375,7 @@ const changeApplyChecked = () => {
   }
 }
 
-//通过申请
-const clickToApply = () => {
-  if (chooseApplyValue.value.length === 0) {
-    ElMessage.warning('请选择要通过的用户!');
-    return;
-  }
-  //更新页面
-  for (let index = 0; index < chooseApplyValue.value.length; index++) {
-    // this.chooseApplyValue[index].is_active=1
-    let applyOne = chooseApplyValue.value[index];
-    console.log(applyOne,'applyOne');
-    for (let index = 0; index < applyUserList.value.length; index++) {
-      if (applyUserList.value[index].indexOf(applyOne) != -1) {
-        applyUserList.value[index].status = 1;
-        //给后端传递值 更改用户状态
-        // console.log("已通过");
-        //前端本地更改
-        deleteUserListShow.value.push(applyUserList.value[index]);
-        applyUserListShow.value.splice(index, 1);
-      }
-    }
-  }
-  console.log(chooseApplyValue);
-  const arr = chooseApplyValue.map((id) => {
-    return 'userList=' + id;
-  });
-  const paramsString = arr.join('&');
-  const searchParams = new URLSearchParams(paramsString);
 
-  //发送要通过的id
-  updateStatus(searchParams).then((res) => {
-    if (res.code === 200) {
-      ElMessage.success('通过成功');
-      chooseApplyValue = [];
-      applyChecked.value = false;
-    }
-  }).catch((error) => {
-  ElMessage.error(error);
-});;
-}
 // //删除用户
 
 // const clickToDelete = () => {
