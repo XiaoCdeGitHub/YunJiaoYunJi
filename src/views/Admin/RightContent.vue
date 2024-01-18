@@ -13,10 +13,6 @@
 import RightFilter from './RightComponents/RightFilter.vue';
 import RightHomework from './RightComponents/RightHomework.vue';
 
-  const receive = (data)=>{
-    console.log(data);
-    let groupInfo = data;
-    }
 </script>
 
 <style lang="less" scoped>

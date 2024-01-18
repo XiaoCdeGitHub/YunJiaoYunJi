@@ -9,7 +9,9 @@
         <div class="bg">
             <div class="circle">
                 <div class="form">
-                    <img src="@/assets/img/signUp/关闭.png" alt="quxiao" class="quxiao">
+                <div @click="cancel()">
+                  <img src="@/assets/img/signUp/关闭.png" alt="quxiao" class="quxiao" style="z-index:99" >
+                </div>
                     <div class="form-center">
                         <div class="logo">
                             <img src="@/assets/img/signUp/logo.png" alt="logo">
@@ -25,7 +27,7 @@
                                 <option value="mishuchu">秘书处</option>
                             </select>
                             <img src="@/assets/img/signUp/xiala.png" alt="">
-                        </div>   
+                        </div>
                         <div class="StuId">
                             <h3>学号 Student Id</h3>
                             <input type="text" name="studentId" id="studentId">
@@ -41,19 +43,31 @@
                             <input type="password" name="password" id="password">
                             <img src="@/assets/img/signUp/passWord.png" alt="Pw">
                         </div>
-                        <input type="button" value="确认" class="comfirm">
+                        <input type="button" value="确认" class="confirm" @click="signUp()">
                         <h6>忘记密码？</h6>
                     </div>
                 </div>
-                <img src="@/assets/img/login/xiaoren1.png" alt="quxiao" class="xiaoren1">
-                <img src="@/assets/img/login/xiaoren2.png" alt="quxiao" class="xiaoren2">
+                <img src="@/assets/img/login/xiaoren1.png" alt="xiaoren1" class="xiaoren1">
+                <img src="@/assets/img/login/xiaoren2.png" alt="xiaoren2" class="xiaoren2">
                 <div class="footer"></div>
             </div>
         </div>
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+  const router = useRouter()
+
+const cancel = () => {
+  console.log(1);
+  router.push('/login')
+}
+const signUp = () => {
+  ElMessage.success('注册成功')
+  router.push('/login')
+
+}
+</script>
 
 <style scoped lang="less">
 .bg {
@@ -65,15 +79,15 @@
     flex-direction: column;
 
     .circle {
-        height: 650px;
-        width: 500px;
+        height: 520px;
+        width: 450px;
         margin: auto;
         background-color: #EFF4FF;
         z-index: 100;
 
         .form {
-            height: 600px;
-            width: 380px;
+            height: 490px;
+            width: 400px;
             margin: 0 auto;
             background-color: #3C66FD;
             border-radius: 20px;
@@ -94,11 +108,11 @@
                         width: 30px;
                         height: 20px;
                         margin-right: 10px;
-                        margin-top: 10px;
+                        // margin-top: 10px;
                     }
 
                     h5 {
-                        padding-top: 13px;
+                        padding-top: 3px;
                         font-family: sans-serif;
                     }
 
@@ -112,8 +126,8 @@
                 h1 {
                     color: white;
                     font-family: sans-serif;
-                    margin-top: 25px;
-                    margin-bottom: 25px;
+                    margin-top: 15px;
+                    margin-bottom: 15px;
                 }
 
                 h3 {
@@ -140,12 +154,12 @@
                         //border: solid 3px white;
                         padding-right: 20px;
                         width: 300px;
-                        height: 42px;
+                        height: 38px;
                         -webkit-appearance:none;
                         -moz-appearance:none;
                         appearance:none;
-                        margin-top: 10px;
-                        margin-bottom: 10px;
+                        margin-top: 5px;
+                        margin-bottom: 5px;
                         border-radius: 10px;
                         border: solid 3px white;
                         background-color: #3C66FD;
@@ -160,7 +174,7 @@
                     }
                     //select::-ms-expand {
                     //    display: none;
-                    //}            
+                    //}
                 }
 
                 .StuId {
@@ -169,13 +183,18 @@
                     input {
                         border: none;
                         width: 300px;
-                        height: 40px;
-                        margin-top: 10px;
-                        margin-bottom: 10px;
+                        height: 35px;
+                        margin-top: 5px;
+                        margin-bottom: 5px;
                         border-radius: 10px;
                         border: solid 3px white;
                         background-color: #3C66FD;
+                        transition: transform 0.2s; /* 添加过渡效果 */
                     }
+                    input:focus {
+  /* 点击时的放大效果 */
+  transform: scale(1.05);
+}
 
                     img {
                         width: 35px;
@@ -192,13 +211,18 @@
                     input {
                         border: none;
                         width: 300px;
-                        height: 40px;
-                        margin-top: 10px;
-                        margin-bottom: 10px;
+                        height: 35px;
+                        margin-top: 5px;
+                        margin-bottom: 5px;
                         border-radius: 10px;
                         border: solid 3px white;
                         background-color: #3C66FD;
+                        transition: transform 0.2s; /* 添加过渡效果 */
                     }
+                    input:focus {
+  /* 点击时的放大效果 */
+  transform: scale(1.05);
+}
 
                     img {
                         width: 20px;
@@ -215,13 +239,18 @@
                     input {
                         border: none;
                         width: 300px;
-                        height: 40px;
-                        margin-top: 10px;
-                        margin-bottom: 10px;
+                        height: 35px;
+                        margin-top: 5px;
+                        margin-bottom: 5px;
                         border-radius: 10px;
                         border: solid 3px white;
                         background-color: #3C66FD;
-                    }
+                        transition: transform 0.2s; /* 添加过渡效果 */
+                      }
+                      input:focus {
+  /* 点击时的放大效果 */
+  transform: scale(1.05);
+}
 
                     img {
                         width: 22px;
@@ -232,24 +261,48 @@
                     }
                 }
 
-                .comfirm {
+                .confirm {
                     border: none;
                     font-family: sans-serif;
                     border: none;
                     width: 300px;
-                    height: 50px;
+                    height: 40px;
                     margin-top: 10px;
-                    margin-bottom: 15px;
+                    margin-bottom: 5px;
                     border-radius: 10px;
                     border: solid 3px white;
                     background: white;
                     color: #3C66FD;
                     font-weight: bold;
-                    font-size: 22px;
+                    font-size: 18px;
                     padding-top: 5px;
                     padding-bottom: 5px;
                     letter-spacing: 2px;
+          transition: transform 0.2s, box-shadow 0.2s; /* 添加过渡效果和阴影过渡 */
+
                 }
+                .confirm:active {
+  /* 点击时的放大效果和抖动效果 */
+  transform: scale(1.35);
+  // animation: shake 0.2s infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(5px);
+  }100% {
+    transform: translateX(0);
+  }
+}
 
             }
 
@@ -268,7 +321,7 @@
             position: absolute;
             width: 200px;
             height: 260px;
-            left: 33%;
+            left: 330px;
             top: 44%;
             z-index: -1;
         }
@@ -277,8 +330,8 @@
             position: absolute;
             width: 140px;
             height: 200px;
-            left: 58%;
-            top: 19%;
+            left: 780px;
+            top: 80px;
             z-index: -1;
         }
 

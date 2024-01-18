@@ -132,10 +132,6 @@ const Submit=()=> {
         // this.$emit('inform','1111')
       });
   }
-
-const emits = defineEmits(['groupInfo'])
-console.log(groupInfo.value,'groupInfo.value111111111111111111');
-emits('groupInfo',groupInfo.value)
 </script>
 
 <style scoped>

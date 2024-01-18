@@ -57,7 +57,7 @@
         rows="4"
       >
       </textarea>
-      <button class="publish-button" @click="submitJob()">任务发布</button>
+      <button class="publish-button" @click="submitJob()">任务提交</button>
     </div>
   </div>
 </template>

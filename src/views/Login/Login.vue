@@ -18,7 +18,7 @@
             <h1>登录 Log In</h1>
             <div class="StuId">
               <h3>学号 Student Id</h3>
-              <input type="text" name="studentId" id="studentId">
+              <input type="text" name="studentId" id="studentId" value="id">
               <img src="@/assets/img/login/学号.png" alt="StuId">
             </div>
             <div class="Name">
@@ -31,10 +31,10 @@
                 <input type="password" name="password" id="password">
                 <img src="@/assets/img/login/Password.png" alt="Pw">
               </div>
-            <input type="button" value="确认" class="comfirm">
+            <input type="button" value="确认" class="confirm" @click="login()">
             <h6>忘记密码？</h6>
           </div>
-          <div class="form-right">
+          <div class="form-right" @click="toSignUp()">
             <img src="@/assets/img/login/right.png" >
           </div>
         </div>
@@ -46,7 +46,19 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+  const router = useRouter()
+
+const login = () => {
+  router.push('/user')
+}
+const toSignUp = () => {
+  setTimeout(() => {
+    router.push('/signup')
+},300)
+}
+
+</script>
 
 <style scoped lang="less">
 .bg{
@@ -56,14 +68,15 @@
   // position: relative;
   display: flex;
   flex-direction: column;
-  
+
   .circle{
     height:450px;
     width:450px;
     margin:auto;
     background-color: #EFF4FF;
     z-index:100;
-  
+    position: relative;
+
     .form{
       height:410px;
       width:350px;
@@ -80,7 +93,7 @@
         //background-color: yellow;
         padding-top: 10px;
         position: relative;
-        
+
         .logo{
           img{
             width:30px;
@@ -107,16 +120,15 @@
           color:#6C6FA3;
           font-family:sans-serif;
           margin-bottom: 5px;
-          
+
         }
         h6{
+          text-align: center;
           color:#9393B9;
           //margin:auto 0;
           font-family:sans-serif;
-          position: absolute;
-          left:42%;
         }
-        
+
        .StuId{
         position: relative;
             input{
@@ -128,7 +140,13 @@
               border-radius: 10px;
               border:solid 3px #6C6FA3;
               background-color: #ECEEEF;
+              transition: transform 0.2s; /* 添加过渡效果 */
             }
+            input:focus {
+  /* 点击时的放大效果 */
+  transform: scale(1.05);
+}
+
             img{
               width:35px;
               height: 25px;
@@ -136,7 +154,7 @@
               left:85%;
               top:54%;
             }
-       }     
+       }
        .Name{
         position: relative;
             input{
@@ -148,7 +166,13 @@
               border-radius: 10px;
               border:solid 3px #6C6FA3;
               background-color: #ECEEEF;
+              transition: transform 0.2s; /* 添加过渡效果 */
+
             }
+            input:focus {
+  /* 点击时的放大效果 */
+  transform: scale(1.05);
+}
             img{
               width:20px;
               height: 25px;
@@ -156,7 +180,7 @@
               left:88%;
               top:52%;
             }
-       }     
+       }
        .PWord{
         position: relative;
             input{
@@ -168,7 +192,13 @@
               border-radius: 10px;
               border:solid 3px #6C6FA3;
               background-color: #ECEEEF;
+              transition: transform 0.2s; /* 添加过渡效果 */
+
             }
+            input:focus {
+  /* 点击时的放大效果 */
+  transform: scale(1.05);
+}
             img{
               width:25px;
               height: 25px;
@@ -176,9 +206,9 @@
               left:88%;
               top:54%;
             }
-       }     
+       }
 
-       .comfirm{
+       .confirm{
           border:none;
           font-family:sans-serif;
           border:none;
@@ -195,8 +225,31 @@
           padding-top: 5px;
           padding-bottom: 5px;
           letter-spacing: 2px;
+          transition: transform 0.2s, box-shadow 0.2s; /* 添加过渡效果和阴影过渡 */
        }
-          
+       .confirm:active {
+  /* 点击时的放大效果和抖动效果 */
+  transform: scale(1.35);
+  // animation: shake 0.2s infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(5px);
+  }100% {
+    transform: translateX(0);
+  }
+}
+
       }
       .quxiao{
         position: absolute;
@@ -208,24 +261,30 @@
       }
       .form-right{
         position: absolute;
-        top:22%;
-        left:56%;
+        top:-20px;
+        left:320px;
         background-color: #3C66FD;
         height:100px;
         width:100px;
         border-radius: 20px;
         padding: 20px;
+        transition: transform 0.4s, box-shadow 0.2s; /* 添加过渡效果和阴影过渡 */
         img{
           width: 60px;
           height: 60px;
         }
       }
+      .form-right:active {
+  /* 点击时的放大效果和抖动效果 */
+  transform: scale(1.35);
+  // animation: shake 0.2s infinite;
+}
       }
       .xiaoren1{
         position:absolute;
         width:170px;
         height:230px;
-        left:36%;
+        left:-40px;
         top:44%;
         z-index: -1;
       }
@@ -233,8 +292,8 @@
         position:absolute;
         width:150px;
         height:200px;
-        left:55%;
-        top:30%;
+        left:355px;
+        top:70px;
         z-index: -1;
       }
     .footer{

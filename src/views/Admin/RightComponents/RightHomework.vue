@@ -44,7 +44,7 @@ import {useGroupStore} from '@/stores/group'
       // stuList,
 // 符合条件的学生列表
 
-let stufilterList = ref([
+const stufilterList = ref([
 { id: 1, user_name: '小鱼', group_name: '开发', is_active: 0 },
   { id: 2, user_name: '李李好', group_name: '开发', is_active: 0 },
   { id: 3, user_name: '脆脆鲨', group_name: '秘书处', is_active: 1 },
@@ -102,15 +102,15 @@ console.log(stufilterList.value,'stufilterList');
         direction,
       };
       console.log(params);
-      fuzzyStudents(params).then((res) => {
-        res = res.data;
-        console.log(res);
-        stufilterList.value = res.map((item) => {
-          item.isSelect = false;
-          item.curWork = item.work_list[item.work_list.length - 1] || {};
-          return item;
-        });
-      });
+      // fuzzyStudents(params).then((res) => {
+      //   res = res.data;
+      //   console.log(res);
+      //   stufilterList.value = res.map((item) => {
+      //     item.isSelect = false;
+      //     item.curWork = item.work_list[item.work_list.length - 1] || {};
+      //     return item;
+      //   });
+      // });
     }
     const getDownloadHerf = (item)=> {
       if (item.curWork?.url_file_name) {
