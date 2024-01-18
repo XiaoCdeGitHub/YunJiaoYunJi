@@ -9,7 +9,7 @@ export interface DeNewReqForm {
   };
 }
 export interface Jobs{
-  params: FormData
+  params: any;
 }
 
 // export const getNews = (): Promise<any> => {

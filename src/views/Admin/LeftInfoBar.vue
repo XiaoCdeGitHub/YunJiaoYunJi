@@ -101,8 +101,9 @@ const submitJob = () => {
   if (!textarea.value) {
     ElMessage.error('请先填写备注');
   }
-}
-let [start, stop] = value2.value;
+  let [start, stop] = value2.value;
+  localStorage.setItem("jobTime", JSON.stringify(value2.value));
+
 console.log(start, stop);
 
 
@@ -111,7 +112,7 @@ if (start!==undefined && stop!==undefined) {
   const res = `${date.getMonth()}月${date.getDate()}日  ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
   return res;
 }
-  let work = reactive({
+  let work = {
     // name: `适应期第${weekToBeWorkName(this.weekNumber)}周作业`,
     file: file.value,
     startTime: formatDate(start),
@@ -119,15 +120,20 @@ if (start!==undefined && stop!==undefined) {
     notice: textarea.value,
     direction: value1.value,
     weeks: weekNumber.value,
-  });
-  publicJobs(work).then((res) => {
-        if (res.code === 200) {
-          ElMessage.success('发布成功');
-        } else {
-          ElMessage.error('发布失败');
-        }
-      })
+  };
+  console.log(work, 'work');
+  localStorage.setItem('work',JSON.stringify(work));
+  ElMessage.success('发布成功')
+  // publicJobs(work).then((res) => {
+      //   if (res.code === 200) {
+      //     ElMessage.success('发布成功');
+      //   } else {
+      //     ElMessage.error('发布失败');
+      //   }
+      // })
 }
+}
+
 
 
 </script>

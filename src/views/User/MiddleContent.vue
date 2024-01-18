@@ -6,7 +6,7 @@
           <div class="user-photo">
             <img src="https://cd-mapbed.oss-cn-beijing.aliyuncs.com/preview.gif" alt="" />
           </div>
-          <p :userName="userName">早上好，{{ userData.name}}!</p>
+          <p >早上好，{{ userData.name}}!</p>
         </div>
         <div class="fly1">
           <img src="" alt="" />
@@ -100,7 +100,7 @@
         </textarea>
 
       </div>
-      <div class="button-submit">
+      <div class="button-submit" @click="submit()">
         <p>确认提交&nbsp;<el-icon><SuccessFilled /></el-icon></p>
 
       </div>
@@ -147,11 +147,11 @@ const userData = ref({
 })
 //轮播图内容
 const carousel = ref([
-  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/4.jpg',
-  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/3.jpg',
-  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/2.jpg',
-  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/1.jpg',
-  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/5.jpg',
+  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/640.jpg',
+  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/640%20(2).jpg',
+  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/640%20(1).jpg',
+  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/fdb9787da22ec174a16ae3ee29230a2.jpg',
+  'https://cd-mapbed.oss-cn-beijing.aliyuncs.com/4f00dc307b594c9c33b0a89be4b9d53.jpg',
 ])
 // 创建一个表示当前日期的Date对象
 let currentDate = new Date();
@@ -189,7 +189,9 @@ setInterval(function() {
  currentTime.value = getCurrentTime();
   // console.log(currentTime);
 }, 1000);
-
+const submit = () => {
+  ElMessage.success('提交成功！')
+}
 </script>
 
 <style lang="less" scoped>
@@ -390,6 +392,10 @@ setInterval(function() {
       margin-left: auto;margin-right: auto;
     }
   }
+  .button-submit:active {
+  transform: scale(0.9); /* 缩小按钮 */
+  transition: transform 0.3s ease-in-out; /* 添加过渡效果 */
+}
 }
 .middle-footer{
   width: 98%;

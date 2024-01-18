@@ -22,6 +22,8 @@ interface ResultData<T = any> extends Result {
 const isProduction = import.meta.env.MODE === 'production';
 console.log(import.meta.env.MODE);
 const URL: string = isProduction ? import.meta.env.VITE_AXIOS_URL : '/api';
+// const URL: string = 'http://yjyjtop.natapp1.cc/';
+
 enum RequestEnums {
   TIMEOUT = 20000,
   OVERDUE = 600, // 登录失效

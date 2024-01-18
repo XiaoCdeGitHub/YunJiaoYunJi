@@ -381,89 +381,102 @@ const clickToApply = () => {
     ElMessage.warning('请选择要通过的用户!');
     return;
   }
+  console.log('chooseApplyValue.value',chooseApplyValue.value);
   //更新页面
   for (let index = 0; index < chooseApplyValue.value.length; index++) {
     // this.chooseApplyValue[index].is_active=1
     let applyOne = chooseApplyValue.value[index];
-    console.log(applyOne,'applyOne');
-    for (let index = 0; index < applyUserList.value.length; index++) {
-      if (applyUserList.value[index].indexOf(applyOne) != -1) {
-        applyUserList.value[index].status = 1;
-        //给后端传递值 更改用户状态
+    console.log(applyOne, 'applyOne');
+    if (applyUserList.value.findIndex(item => item.id === applyOne)!== -1) {
+      //找到在applyUserList中的索引
+      let _index = applyUserList.value.findIndex(item => item.id === applyOne)
+      applyUserList.value[_index].status = 1;
+       //给后端传递值 更改用户状态
         // console.log("已通过");
         //前端本地更改
-        deleteUserListShow.value.push(applyUserList.value[index]);
-        applyUserListShow.value.splice(index, 1);
-      }
+        deleteUserListShow.value.push(applyUserList.value[_index]);
+        applyUserListShow.value.splice(_index, 1);
     }
+
+    // for (let index = 0; index < applyUserList.value.length; index++) {
+    //   if (applyUserList.value[index].indexOf(applyOne) != -1) {
+
+    //   }
+    // }
   }
-  console.log(chooseApplyValue);
-  const arr = chooseApplyValue.map((id) => {
-    return 'userList=' + id;
-  });
-  const paramsString = arr.join('&');
-  const searchParams = new URLSearchParams(paramsString);
-
-  //发送要通过的id
-  updateStatus(searchParams).then((res) => {
-    if (res.code === 200) {
-      ElMessage.success('通过成功');
-      chooseApplyValue = [];
+  ElMessage.success('通过成功，欢迎使用云骄云骥！');
+        chooseApplyValue.value = [];
       applyChecked.value = false;
-    }
-  }).catch((error) => {
-  ElMessage.error(error);
-});;
+
+//   console.log(chooseApplyValue);
+//   const arr = chooseApplyValue.map((id) => {
+//     return 'userList=' + id;
+//   });
+//   const paramsString = arr.join('&');
+//   const searchParams = new URLSearchParams(paramsString);
+
+//   //发送要通过的id
+//   updateStatus(searchParams).then((res) => {
+//     if (res.code === 200) {
+//       ElMessage.success('通过成功');
+//       chooseApplyValue = [];
+//       applyChecked.value = false;
+//     }
+//   }).catch((error) => {
+//   ElMessage.error(error);
+// });;
 }
-// //删除用户
+//删除用户
 
-// const clickToDelete = () => {
-//   if (chooseDeleteValue.length === 0) {
-//     ElMessage.warning('请选择要删除的用户!');
-//     return;
-//   }
-//   for (let index = 0; index < chooseDeleteValue.length; index++) {
-//     let deleteOne = chooseDeleteValue[index];
-//     for (let index = 0; index < deleteUserList.length; index++) {
-//       if (deleteUserList[index].userId.indexOf(deleteOne) != -1) {
-//         ElMessageBox.confirm(
-//     '你是否决定对‘' + deleteUserList[index].name + '’永远说再见',
-//     '提示',
-//     {
-//       confirmButtonText: '确定',
-//       cancelButtonText: '取消',
-//       type: 'warning',
-//     }
-//   ).then(() => {
-//             //前端本地更改
-//             // this.deleteUserList[index].is_active = 0;
-//             let deleteChange = deleteUserList[index].userId;
-//             console.log('我是id', that.deleteUserList[index].userId);
-//             const data = { userList: deleteChange };
-//             deleteUser(data).then((res) => {
-//               if (res.code === 200) {
-//                 that.deleteUserListShow.splice(index, 1);
-//                 ElMessage({
-//                   type: 'success',
-//                   message: '删除成功!',
-//                 });
-//               }
-//             });
-//           })
-//           .catch(() => {
-//             ElMessage({
-//               type: 'info',
-//               message: '已取消删除',
-//             });
-//           });
-//       }
-//     }
-//   }
-//   chooseDeleteValue = [];
-//   deleteChecked.value = false;
+const clickToDelete = () => {
+  console.log('点击删除');
+  if (chooseDeleteValue.value.length === 0) {
+    ElMessage.warning('请选择要删除的用户!');
+    return;
+  }
+  for (let index = 0; index < chooseDeleteValue.value.length; index++) {
+    console.log(222);
+    let deleteOne = chooseDeleteValue.value[index];
+    console.log(deleteOne, 'deleteOne');
+    if (deleteUserList.value.findIndex(item => item.id === deleteOne)!== -1) {
+      let _index = deleteUserList.value.findIndex(item => item.id === deleteOne)
+      ElMessageBox.confirm(
+    '你是否决定对‘' + deleteUserList.value[_index].user_name + '’永远说再见',
+    '提示',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  ).then(() => {
+            //前端本地更改
+            //找到在deleteUserList中的索引
+      deleteUserList.value[_index].status = 0;
+       //给后端传递值 更改用户状态
+        // console.log("已通过");
+        //前端本地更改
+        applyUserListShow.value.push(deleteUserList.value[_index]);
+        deleteUserListShow.value.splice(_index, 1);
+          })
+          .catch(() => {
+            ElMessage({
+              type: 'info',
+              message: '已取消删除',
+            });
+          });
+    }
 
-//   // console.log(this.deleteUserList);
-// }
+    // for (let index = 0; index < deleteUserList.length; index++) {
+    //   if (deleteUserList[index].userId.indexOf(deleteOne) != -1) {
+
+    //   }
+    // }
+  }
+  // chooseDeleteValue.value = [];
+  // deleteChecked.value = false;
+
+  // console.log(this.deleteUserList);
+}
 
 //删除用户小选框
 const clickDeleteItem = (name, id) => {

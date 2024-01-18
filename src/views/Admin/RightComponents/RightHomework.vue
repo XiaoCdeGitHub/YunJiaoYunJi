@@ -8,7 +8,7 @@
       <ul>
         <li v-for="(item, index) in stufilterList" :key="index" ref="li">
           <div class="circle"></div>
-          {{ item.name }}
+          {{ item.user_name }}
           <!-- {{Hstage}} -->
           <input
             type="checkbox"
@@ -38,31 +38,43 @@
 import arrayToExcel from '../../../plugins/arrayToExcel/index';
 import { loadFile } from '../../../utils/brower';
 import { fuzzyStudents } from '@/service/api/admin'
+import {useGroupStore} from '@/stores/group'
 
-const props = defineProps(['groupInfo'])
   // 筛选条件
-
       // stuList,
-      // 符合条件的学生列表
-      let stufilterList = reactive([])
+// 符合条件的学生列表
+
+let stufilterList = ref([
+{ id: 1, user_name: '小鱼', group_name: '开发', is_active: 0 },
+  { id: 2, user_name: '李李好', group_name: '开发', is_active: 0 },
+  { id: 3, user_name: '脆脆鲨', group_name: '秘书处', is_active: 1 },
+  { id: 4, user_name: '崔东山', group_name: '设计', is_active: 1 },
+])
+// stufilterList.value = groupInfo
+
+if (JSON.parse(localStorage.getItem("groupInfo"))) {
+  stufilterList.value = JSON.parse(localStorage.getItem("groupInfo")).data;
+console.log(stufilterList.value,'stufilterList');
+}
+
       const url = ref('https://homework-hand-in.oss-cn-hangzhou.aliyuncs.com/')
       let studentsList = reactive([])
     //单选框
     const checkEach = ()=>{
       let count = 0;
-      stufilterList.forEach((item) => {
+      stufilterList.value.forEach((item) => {
         if (item.isSelect == true) {
           count++;
         }
       });
-      if (count == stufilterList.length) {
+      if (count == stufilterList.value.length) {
         let _isSelected = document.getElementById('ckAll');
         _isSelected.checked = true;
       }
     }
     // 全选框
     const checkAll=()=> {
-      stufilterList.forEach((item) => {
+      stufilterList.value.forEach((item) => {
         if (item.isSelect == false) {
           item.isSelect = true;
         } else {
@@ -72,7 +84,7 @@ const props = defineProps(['groupInfo'])
     }
     const Submit= ()=> {
       // 获取被选中的学生姓名
-      stufilterList.forEach((item) => {
+      stufilterList.value.forEach((item) => {
         if (item.isSelect) {
           let url = getDownloadHerf(item);
           let name = getDownloadName(item);
@@ -93,7 +105,7 @@ const props = defineProps(['groupInfo'])
       fuzzyStudents(params).then((res) => {
         res = res.data;
         console.log(res);
-        stufilterList = res.map((item) => {
+        stufilterList.value = res.map((item) => {
           item.isSelect = false;
           item.curWork = item.work_list[item.work_list.length - 1] || {};
           return item;
@@ -113,10 +125,10 @@ const props = defineProps(['groupInfo'])
       return '';
     }
    const downloadExcel=()=> {
-      if (stufilterList.length == 0) {
+      if (stufilterList.value.length == 0) {
         ElMessage({ message: '暂时没有生成报告的数据哦', type: 'warning' });
       }
-      let result = stufilterList.map((item) => {
+      let result = stufilterList.value.map((item) => {
         console.log(item);
         return {
           name: item.name,
@@ -135,11 +147,15 @@ const props = defineProps(['groupInfo'])
       console.log(groupInfo,666);
     }
 const getRate = () => {
-  let finished = stufilterList.filter((item) => {
-        return item.is_apply;
-      });
-      return `${finished.length}/${stufilterList.length}`;
-    }
+  return 0
+  // if (stufilterList) {
+  //   let finished = stufilterList.filter((item) => {
+  //       return item.is_apply;
+  //     });
+  //     return `${finished.length}/${stufilterList.length}`;
+  //   }
+  }
+
 
 </script>
 

@@ -1,6 +1,64 @@
 <template>
   <div class="admin-content-left">
+    <div class="work-publish">
+      <span style="font-size: 16px">任务完成周期：</span>
+      <div class="publish-top">
+        <div class="date-picker">
+          <el-date-picker
+            v-model="value2"
+            type="datetimerange"
+            :picker-options="pickerOptions"
+            range-separator=" "
+            start-placeholder="开始"
+            end-placeholder="结束"
+            align="right"
+          >
+          <el-tooltip
+        class="box-item"
+        effect="dark"
+        content="Top Left prompts info"
+        placement="top-start"
+      ></el-tooltip>
+        </el-date-picker>
+        </div>
+        <div class="group-checkbox">
+          <el-select v-model="value1"  placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
 
+            >
+            </el-option>
+          </el-select>
+        </div>
+      </div>
+      <span style="position: relative; top: 10px"> 作业详情：</span>
+      <div class="week-checkbox">
+        <el-select v-model="weekNumber" disabled placeholder="请选择">
+          <el-option
+            v-for="item in weekOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+
+          >
+          </el-option>
+        </el-select>
+      </div>
+      <label class="input-file-button" for="upload"> 点击下载文件 </label>
+      <input type="file" id="upload" @change="getFile" />
+      <textarea
+        class="job-detail"
+        placeholder="请输入备注内容"
+        v-model="textarea"
+        cols="34"
+        rows="4"
+      >
+      </textarea>
+      <button class="publish-button" @click="submitJob()">任务发布</button>
+    </div>
   </div>
 </template>
 
@@ -8,78 +66,34 @@
 import { ChineseTransformGreenwich } from '../../utils/date';
 import { weekToBeWorkName } from '../../utils/work';
 import { directionOptionList, weekStageList } from '../../data/admin';
-import {publicJobs,updateStatus,deleteUser} from '@/service/api/admin'
-      const value1 = ref('')//方向选择值
-      const textarea = ref('') //
-      const value2 = ref('')//日期值
+import { publicJobs, updateStatus, deleteUser } from '@/service/api/admin'
+let work = JSON.parse(localStorage.getItem('work'));
+console.log(work,'work');
+      const value1 = ref('全栈方向')//方向选择值
+      const textarea = ref('这次作业大家要好好完成噢！！！') //
+      const value2 = ref([])//日期值
       const options = directionOptionList
-      const weekNumber = ref('')
+      const weekNumber = ref('第一周')
       const weekOptions = weekStageList
       const file = ref('')
-      const tip = ref('未选择文件:文件类型为md或word')
       const color = ref('red')
 
-   const getFile=(e)=>{
-      const uploadFile = e.target.files[0];
-      const fileType = uploadFile.name.split('.')[1];
-      if (fileType === 'docx' || fileType === 'md' || fileType === 'doc') {
-        file.value = uploadFile;
-        tip.value = '上传文件:' + uploadFile.name;
-        color.value = '#4a1691';
-      } else {
-        ElMessage.warning({ message: '请上传md或word格式的文件哦', showClose: true });
-      }
-    }
-const submitJob = () => {
-  if (!value2.value) {
-    ElMessage.error('请先选择作业日期');
+value1.value = work.direction;
+textarea.value = work.notice;
+value2.value = JSON.parse(localStorage.getItem("jobTime"));
 
-  }
-  if (!value1.value) {
-    ElMessage.error('请先选择方向');
-
-  }
-  if (!weekNumber.value) {
-    ElMessage.error('请先选择适应期周数');
-  }
-  if (!file.value) {
-    ElMessage.error('请先选择作业');
-  }
-  if (!textarea.value) {
-    ElMessage.error('请先填写备注');
-  }
-}
-let [start, stop] = value2.value;
-console.log(start, stop);
-
-
-if (start!==undefined && stop!==undefined) {
-  const formatDate = (date) => {
-  const res = `${date.getMonth()}月${date.getDate()}日  ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-  return res;
-}
-  let work = reactive({
-    // name: `适应期第${weekToBeWorkName(this.weekNumber)}周作业`,
-    file: file.value,
-    startTime: formatDate(start),
-    endTime: formatDate(stop),
-    notice: textarea.value,
-    direction: value1.value,
-    weeks: weekNumber.value,
-  });
-  publicJobs(work).then((res) => {
-        if (res.code === 200) {
-          ElMessage.success('发布成功');
-        } else {
-          ElMessage.error('发布失败');
-        }
-      })
-}
+console.log(value2.value);
+weekNumber.value = work.weeks;
+// file.value = work.file;
 
 
 </script>
 
 <style lang="less" scoped>
+ .box-item {
+  width: 110px;
+  margin-top: 10px;
+}
 .job-detail {
   position: relative;
   top: 15px;
@@ -187,10 +201,10 @@ input {
 :deep(.el-select),
 :deep(.el-input),
 :deep(.el-input__inner) {
-  background-color: #c1caf3;
+  // background-color: #c1caf3;
   color: grey;
   border: 2px;
-  border-radius: 30px;
+  // border-radius: 30px;
   text-align: center;
 }
 //修改单个的选项的样式

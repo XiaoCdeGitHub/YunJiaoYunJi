@@ -56,7 +56,7 @@ export default defineConfig({
     Inspect(),
     viteMockServe({
       mockPath: "./src/mock/source", // 解析刚刚user.ts的位置
-      localEnabled: true // 是否开启开发环境
+      // localEnabled: true // 是否开启开发环境
     })
 
   ],

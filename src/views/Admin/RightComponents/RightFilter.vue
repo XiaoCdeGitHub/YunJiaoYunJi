@@ -3,7 +3,7 @@
     <div class="sift-word1">筛选条件</div>
     <div class="sift-word2">Filter</div>
     <div class="picture-computer"></div>
-    <button @click="Submit()">确定</button>
+    <button @click="Submit">确定</button>
     <!-- 阶段 -->
     <div>
       <div class="stage">
@@ -41,9 +41,11 @@
 </template>
 
 <script setup>
+import {defineEmits} from 'vue';
 import {getFilter} from '@/service/api/admin'
-
+import {useGroupStore} from '@/stores/group'
 import { groupList, directionList, stageList } from '../../../data/admin';
+import { storeToRefs } from 'pinia'
       const index = ref(0)
       const SisShow = ref(false)
       const  DisShow = ref(false)
@@ -91,17 +93,18 @@ import { groupList, directionList, stageList } from '../../../data/admin';
         (GisShow.value = !GisShow.value);
     }
     // 原提交按钮
-    // 执行学生列表的筛选和进度条展示函数
-   const Submit=()=> {
-      if (stage === '阶段') {
+// 执行学生列表的筛选和进度条展示函数
+const groupInfo = ref({})
+const Submit=()=> {
+      if (stage.value === '阶段') {
         ElMessage({ message: '请选择阶段', type: 'warning' });
         return;
       }
-      if (dir === '方向') {
+      if (dir.value === '方向') {
         ElMessage({ message: '请选择方向', type: 'warning' });
         return;
       }
-      if (group === '组别') {
+      if (group.value === '组别') {
         ElMessage({ message: '请选择组别', type: 'warning' });
         return;
       }
@@ -111,18 +114,28 @@ import { groupList, directionList, stageList } from '../../../data/admin';
         direction: dir.value,
       };
      console.log('filterParams',filterParams);
+  getFilter(filterParams).then((res) => {
+    console.log(res, '查找后的数据');
+    groupInfo.value = res
+        console.log(groupInfo.value,'点击后子组件内赋值groupInfo.value');
+        if (res.code === 200) {
+          ElMessage.success('查询成功')
+        } else {
+          ElMessage.error('查询失败，状态码为:',res.code)
+        }
+        //将数据存放到本地
+        localStorage.setItem("groupInfo", JSON.stringify(res));
+        // const store = useGroupStore()
+        // const { groupInfo } = storeToRefs(store);
+        // groupInfo.value = res;
+        // this.$store.commit('moudlesUserInfo/setGroupInfo', res.data);
+        // this.$emit('inform','1111')
+      });
+  }
 
-     const emit = defineEmits(['groupInfo'])
-     const emitInfo = () => {
-      emit('groupInfo','1111')
-     }
-      // getFilter(filterParams).then((res) => {
-      //   console.log(res,'查找后的数据');
-      //   //将数据存放到pinia
-      //   this.$store.commit('moudlesUserInfo/setGroupInfo', res.data);
-      //   // this.$emit('inform','1111')
-      // });
-    }
+const emits = defineEmits(['groupInfo'])
+console.log(groupInfo.value,'groupInfo.value111111111111111111');
+emits('groupInfo',groupInfo.value)
 </script>
 
 <style scoped>

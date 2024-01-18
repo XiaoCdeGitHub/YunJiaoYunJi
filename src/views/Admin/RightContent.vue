@@ -1,8 +1,8 @@
 
 <template>
   <div class="admin-content-right">
-    <right-filter @inform="receive"></right-filter>
-    <right-homework :groupInfo="groupInfo"></right-homework>
+    <right-filter ></right-filter>
+    <right-homework ></right-homework>
     <!-- 筛选条件组件 -->
   </div>
 </template>
