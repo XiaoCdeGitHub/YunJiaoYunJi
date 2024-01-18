@@ -50,7 +50,7 @@ import { storeToRefs } from 'pinia'
       const SisShow = ref(false)
       const  DisShow = ref(false)
       const  GisShow = ref(false)
-      const stage = ref('阶段')
+      const stage = ref('第一周')
       const dir = ref('方向')
       const group =  ref('组别')
       // 获取选中的内容
