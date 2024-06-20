@@ -23,13 +23,13 @@
     <div class="middle-body">
       <div class="body-header">
         <div class="search-box-part" @keyup.enter="applySearch()">
-          <div id="cover" >
+          <div id="cover">
             <div class="tb">
               <div class="td">
                 <input type="text" placeholder="name" v-model="applyName" required />
               </div>
-              <div class="td" id="s-cover" >
-                <button type="text" @click="applySearch()"  >
+              <div class="td" id="s-cover">
+                <button type="text" @click="applySearch()">
                   <div id="s-circle"></div>
                   <span></span>
                 </button>
@@ -61,7 +61,8 @@
       <div class="mbody-footer">
         <div class="all-check-button">
           <el-tooltip effect="dark" content="点击以全选用户" placement="right">
-            <input type="checkbox" name="" id="check_box" @change="changeApplyChecked()" v-model="applyChecked" /></el-tooltip>
+            <input type="checkbox" name="" id="check_box" @change="changeApplyChecked()"
+              v-model="applyChecked" /></el-tooltip>
         </div>
         <el-button class="check-button" text @click="clickToApply()">
           <el-tooltip effect="dark" content="选中用户并点击此处提交" placement="right">✔</el-tooltip>
@@ -95,8 +96,7 @@
         </div>
       </div>
       <div class="application-list">
-        <div class="delete_application"
-          :class="{ delete_application_selected: chooseDeleteValue.indexOf(item.id) != -1 }"
+        <div class="delete_application" :class="{ delete_application_selected: chooseDeleteValue.indexOf(item.id) != -1 }"
           v-for="(item, index) in deleteUserListShow" :key="index" @click="clickDeleteItem(item.user_name, item.id)">
           <div class="application-icon">
             <img src="https://cd-mapbed.oss-cn-beijing.aliyuncs.com/20220204215815_e0662.gif" alt="" />
@@ -247,7 +247,7 @@ const applySearch = () => {
     copy_applyUserListShow.value = applyUserListShow.value;
     //查询临时需要的结构数组
     const _copy_applyUserListShow = [...applyUserListShow.value];
-    console.log(_copy_applyUserListShow,'_copy_applyUserListShow');
+    console.log(_copy_applyUserListShow, '_copy_applyUserListShow');
     applyUserListShow.value = [];
     const searchResult = _copy_applyUserListShow.find((item) => {
       return item.user_name === applyName.value
@@ -261,7 +261,7 @@ const applySearch = () => {
       console.log(applyUserListShow, 'applyUserListShow');
       setTimeout(() => {
         applyName.value = ''
-      },1000)
+      }, 1000)
 
     }
 
@@ -269,43 +269,43 @@ const applySearch = () => {
     let searchWord = {
       word: applyName.value,
     };
-//远程搜索
-//     getSearchList(searchWord).then((res) => {
-//       res = res.data;
-//       for (let index = 0; index < res.length; index++) {
-//         if (res[index].is_active == true) {
-//           ElMessage.warning('该用户已经通过申请');
-//         } else if (res[index].is_active == false) {
-//           applyUserListShow = res;
-//           if (index == res.length - 1) {
-//             ElMessage.success('查询成功');
-//             return;
-//           }
-//         }
-//       }
-//       if (res.length == 0) {
-//         ElMessage.error('未查询到该用户');
-//       }
-//     }).catch((error) => {
-//   ElMessage.error(error);
-// });
+    //远程搜索
+    //     getSearchList(searchWord).then((res) => {
+    //       res = res.data;
+    //       for (let index = 0; index < res.length; index++) {
+    //         if (res[index].is_active == true) {
+    //           ElMessage.warning('该用户已经通过申请');
+    //         } else if (res[index].is_active == false) {
+    //           applyUserListShow = res;
+    //           if (index == res.length - 1) {
+    //             ElMessage.success('查询成功');
+    //             return;
+    //           }
+    //         }
+    //       }
+    //       if (res.length == 0) {
+    //         ElMessage.error('未查询到该用户');
+    //       }
+    //     }).catch((error) => {
+    //   ElMessage.error(error);
+    // });
   }
 }
 const deleteSearch = () => {
   // this.$message.warning('功能暂未开放');
   // return;
   if (deleteName.value == '') {
-  ElMessage.error('请输入查询内容');
+    ElMessage.error('请输入查询内容');
     // this.applyUserList= allUserList;
     window.location.reload();
     return;
   } else {
     console.log(deleteName.value);
-    const copy_deleteUserListShow =ref([])
+    const copy_deleteUserListShow = ref([])
     copy_deleteUserListShow.value = deleteUserListShow.value;
     //查询临时需要的结构数组
     const _copy_deleteUserListShow = [...deleteUserListShow.value];
-    console.log(_copy_deleteUserListShow,'_copy_deleteUserListShow');
+    console.log(_copy_deleteUserListShow, '_copy_deleteUserListShow');
     deleteUserListShow.value = [];
     const searchResult = _copy_deleteUserListShow.find((item) => {
       return item.user_name === deleteName.value
@@ -319,34 +319,34 @@ const deleteSearch = () => {
       console.log(deleteUserListShow, 'deleteUserListShow');
       setTimeout(() => {
         deleteName.value = ''
-      },1000)
+      }, 1000)
 
     }
     let searchWord = {
       word: deleteName.value,
     };
 
-//     getSearchList(searchWord).then((res) => {
-//       res = res.data;
-//       for (let index = 0; index < res.length; index++) {
-//         if (res[index].is_active == false) {
-//           ElMessage.warning('该用户还未通过申请');
-//         } else if (res[index].is_active == true) {
-//           deleteUserListShow = res;
-//           if (index == res.length - 1) {
-//             ElMessage.success('查询成功');
-//             return;
-//           }
-//         }
-//       }
-//       if (res.length == 0) {
-//         ElMessage.error('未查询到该用户');
-//       }
+    //     getSearchList(searchWord).then((res) => {
+    //       res = res.data;
+    //       for (let index = 0; index < res.length; index++) {
+    //         if (res[index].is_active == false) {
+    //           ElMessage.warning('该用户还未通过申请');
+    //         } else if (res[index].is_active == true) {
+    //           deleteUserListShow = res;
+    //           if (index == res.length - 1) {
+    //             ElMessage.success('查询成功');
+    //             return;
+    //           }
+    //         }
+    //       }
+    //       if (res.length == 0) {
+    //         ElMessage.error('未查询到该用户');
+    //       }
 
-//       //  ;
-//     }).catch((error) => {
-//   ElMessage.error(error);
-// });
+    //       //  ;
+    //     }).catch((error) => {
+    //   ElMessage.error(error);
+    // });
   }
 }
 //添加用户小选框
@@ -381,21 +381,21 @@ const clickToApply = () => {
     ElMessage.warning('请选择要通过的用户!');
     return;
   }
-  console.log('chooseApplyValue.value',chooseApplyValue.value);
+  console.log('chooseApplyValue.value', chooseApplyValue.value);
   //更新页面
   for (let index = 0; index < chooseApplyValue.value.length; index++) {
     // this.chooseApplyValue[index].is_active=1
     let applyOne = chooseApplyValue.value[index];
     console.log(applyOne, 'applyOne');
-    if (applyUserList.value.findIndex(item => item.id === applyOne)!== -1) {
+    if (applyUserList.value.findIndex(item => item.id === applyOne) !== -1) {
       //找到在applyUserList中的索引
       let _index = applyUserList.value.findIndex(item => item.id === applyOne)
       applyUserList.value[_index].status = 1;
-       //给后端传递值 更改用户状态
-        // console.log("已通过");
-        //前端本地更改
-        deleteUserListShow.value.push(applyUserList.value[_index]);
-        applyUserListShow.value.splice(_index, 1);
+      //给后端传递值 更改用户状态
+      // console.log("已通过");
+      //前端本地更改
+      deleteUserListShow.value.push(applyUserList.value[_index]);
+      applyUserListShow.value.splice(_index, 1);
     }
 
     // for (let index = 0; index < applyUserList.value.length; index++) {
@@ -405,26 +405,26 @@ const clickToApply = () => {
     // }
   }
   ElMessage.success('通过成功，欢迎使用云骄云骥！');
-        chooseApplyValue.value = [];
-      applyChecked.value = false;
+  chooseApplyValue.value = [];
+  applyChecked.value = false;
 
-//   console.log(chooseApplyValue);
-//   const arr = chooseApplyValue.map((id) => {
-//     return 'userList=' + id;
-//   });
-//   const paramsString = arr.join('&');
-//   const searchParams = new URLSearchParams(paramsString);
+  //   console.log(chooseApplyValue);
+  //   const arr = chooseApplyValue.map((id) => {
+  //     return 'userList=' + id;
+  //   });
+  //   const paramsString = arr.join('&');
+  //   const searchParams = new URLSearchParams(paramsString);
 
-//   //发送要通过的id
-//   updateStatus(searchParams).then((res) => {
-//     if (res.code === 200) {
-//       ElMessage.success('通过成功');
-//       chooseApplyValue = [];
-//       applyChecked.value = false;
-//     }
-//   }).catch((error) => {
-//   ElMessage.error(error);
-// });;
+  //   //发送要通过的id
+  //   updateStatus(searchParams).then((res) => {
+  //     if (res.code === 200) {
+  //       ElMessage.success('通过成功');
+  //       chooseApplyValue = [];
+  //       applyChecked.value = false;
+  //     }
+  //   }).catch((error) => {
+  //   ElMessage.error(error);
+  // });;
 }
 //删除用户
 
@@ -438,32 +438,32 @@ const clickToDelete = () => {
     console.log(222);
     let deleteOne = chooseDeleteValue.value[index];
     console.log(deleteOne, 'deleteOne');
-    if (deleteUserList.value.findIndex(item => item.id === deleteOne)!== -1) {
+    if (deleteUserList.value.findIndex(item => item.id === deleteOne) !== -1) {
       let _index = deleteUserList.value.findIndex(item => item.id === deleteOne)
       ElMessageBox.confirm(
-    '你是否决定对‘' + deleteUserList.value[_index].user_name + '’永远说再见',
-    '提示',
-    {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning',
-    }
-  ).then(() => {
-            //前端本地更改
-            //找到在deleteUserList中的索引
-      deleteUserList.value[_index].status = 0;
-       //给后端传递值 更改用户状态
+        '你是否决定对‘' + deleteUserList.value[_index].user_name + '’永远说再见',
+        '提示',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        }
+      ).then(() => {
+        //前端本地更改
+        //找到在deleteUserList中的索引
+        deleteUserList.value[_index].status = 0;
+        //给后端传递值 更改用户状态
         // console.log("已通过");
         //前端本地更改
         applyUserListShow.value.push(deleteUserList.value[_index]);
         deleteUserListShow.value.splice(_index, 1);
-          })
-          .catch(() => {
-            ElMessage({
-              type: 'info',
-              message: '已取消删除',
-            });
+      })
+        .catch(() => {
+          ElMessage({
+            type: 'info',
+            message: '已取消删除',
           });
+        });
     }
 
     // for (let index = 0; index < deleteUserList.length; index++) {
@@ -702,6 +702,7 @@ const changeDeleteChecked = () => {
   left: 40px;
   width: 250px;
   height: 60px;
+
   input {
     position: relative;
     top: -17px;
